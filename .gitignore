@@ -1,0 +1,47 @@
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+Build and dist directories
+dist/
+build/
+
+Logs
+logs/
+*.log
+.log.
+
+Editor directories and files
+.vscode/
+.idea/
+*.suo
+.ntvs
+*.njsproj
+*.sln
+*.swp
+*.sublime-workspace
+
+OS generated files
+.DS_Store
+Thumbs.db
+
+Coverage reports
+coverage/
+
+Temporary files
+*.tmp
+*.temp
+*.bak
+
+MongoDB local data (if any)
+data/
+mongod.lock
