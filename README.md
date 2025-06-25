@@ -20,7 +20,7 @@ An Express.js backend with MongoDB Atlas for managing blogs, newsletter subscrip
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Eyoab11/blog-backend
 cd express-blog-backend
 ```
 2. Install dependecies
