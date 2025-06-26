@@ -38,6 +38,6 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   // Run seeder if SEED_ADMIN is set to 'true'
   if (process.env.SEED_ADMIN === 'true') {
-    require('../seedAdmin');
+    import('../seedAdmin.js');
   }
 });
