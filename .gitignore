@@ -46,4 +46,4 @@ MongoDB local data (if any)
 data/
 mongod.lock
 
-seedAdmin.js
+
