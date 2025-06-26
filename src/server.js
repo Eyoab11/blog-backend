@@ -36,4 +36,8 @@ mongoose.connect(process.env.MONGO_URI, {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  // Run seeder if SEED_ADMIN is set to 'true'
+  if (process.env.SEED_ADMIN === 'true') {
+    require('../seedAdmin');
+  }
 });
