@@ -1,0 +1,230 @@
+openapi: 3.0.0
+info:
+  title: Blog Backend API
+  version: 1.0.0
+  description: API documentation for the Blog backend (blogs, auth, contact, newsletter)
+servers:
+  - url: https://your-deployment-url/api
+    description: Production server
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Blog:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        excerpt:
+          type: string
+        content:
+          type: string
+        author:
+          type: string
+        authorImage:
+          type: string
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        imageUrl:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        readTime:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Contact:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        message:
+          type: string
+    Newsletter:
+      type: object
+      properties:
+        email:
+          type: string
+paths:
+  /blogs:
+    get:
+      summary: Get all blogs
+      tags: [Blogs]
+      responses:
+        200:
+          description: List of blogs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Blog'
+    post:
+      summary: Create a new blog
+      tags: [Blogs]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Blog'
+      responses:
+        201:
+          description: Blog created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Blog'
+        401:
+          description: Unauthorized
+  /blogs/{id}:
+    get:
+      summary: Get a single blog by ID
+      tags: [Blogs]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Blog found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Blog'
+        404:
+          description: Blog not found
+    put:
+      summary: Update a blog by ID
+      tags: [Blogs]
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Blog'
+      responses:
+        200:
+          description: Blog updated
+        401:
+          description: Unauthorized
+        404:
+          description: Blog not found
+    delete:
+      summary: Delete a blog by ID
+      tags: [Blogs]
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Blog deleted
+        401:
+          description: Unauthorized
+        404:
+          description: Blog not found
+  /auth/login:
+    post:
+      summary: Admin login
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  token:
+                    type: string
+        401:
+          description: Invalid credentials
+  /contact:
+    post:
+      summary: Submit a contact form
+      tags: [Contact]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        201:
+          description: Contact submitted
+        400:
+          description: Bad request
+  /newsletter:
+    post:
+      summary: Subscribe to newsletter
+      tags: [Newsletter]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Newsletter'
+      responses:
+        201:
+          description: Subscribed
+        400:
+          description: Bad request 
